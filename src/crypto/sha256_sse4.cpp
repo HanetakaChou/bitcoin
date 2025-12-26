@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <stdint.h>
 
-#if defined(__x86_64__) || defined(__amd64__)
+#if defined(__x86_64__) || defined(_M_X64)
 
 namespace sha256_sse4
 {
@@ -1561,4 +1561,8 @@ _SHUF_00BA:              ddq 0xFFFFFFFFFFFFFFFF0b0a090803020100
 _SHUF_DC00:              ddq 0x0b0a090803020100FFFFFFFFFFFFFFFF
 */
 
+#elif defined(__i386__) || defined(_M_IX86) || defined(__aarch64__) || defined(__arm__) || defined(_M_ARM64) || defined(_M_ARM)
+
+#else
+#error Unknown Architecture
 #endif

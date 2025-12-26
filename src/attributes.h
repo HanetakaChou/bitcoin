@@ -6,22 +6,19 @@
 #ifndef BITCOIN_ATTRIBUTES_H
 #define BITCOIN_ATTRIBUTES_H
 
-#if defined(__clang__)
-#if __has_attribute(lifetimebound)
-#define LIFETIMEBOUND [[clang::lifetimebound]]
-#else
-#define LIFETIMEBOUND
-#endif
-#else
-#define LIFETIMEBOUND
-#endif
-
 #if defined(__GNUC__)
+// GCC or CLANG
 #define ALWAYS_INLINE inline __attribute__((always_inline))
 #elif defined(_MSC_VER)
-#define ALWAYS_INLINE __forceinline
+#if defined(__clang__)
+// CLANG-CL
+#define ALWAYS_INLINE inline __attribute__((always_inline))
 #else
-#error No known always_inline attribute for this platform.
+// MSVC
+#define ALWAYS_INLINE __forceinline
+#endif
+#else
+#error Unknown Compiler
 #endif
 
 #endif // BITCOIN_ATTRIBUTES_H
